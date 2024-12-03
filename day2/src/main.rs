@@ -10,7 +10,8 @@ fn main() {
                 .split_whitespace()
                 .map(|x| x.parse::<i32>().unwrap())
                 .collect();
-            test_validity_dampened(&ints)
+            //test_validity (&ints) //part 1
+            test_validity_dampened(&ints) //part 2
         })
         .filter(|&safe| safe)
         .count();
