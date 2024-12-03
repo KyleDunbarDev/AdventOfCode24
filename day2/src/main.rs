@@ -10,7 +10,7 @@ fn main() {
                 .split_whitespace()
                 .map(|x| x.parse::<i32>().unwrap())
                 .collect();
-            test_validity(&ints)
+            test_validity_dampened(&ints)
         })
         .filter(|&safe| safe)
         .count();
@@ -42,6 +42,24 @@ pub fn test_validity(ints: &Vec<i32>) -> bool {
         }
     }
     true
+}
+
+pub fn test_validity_dampened(ints: &Vec<i32>) -> bool {
+    //If not valid: clone list of ints. Remove an element. Test validity. Repeat
+    if test_validity(ints) {
+        return true;
+    }
+
+    for i in 0..ints.len() {
+        let mut changed_ints = ints.clone();
+        changed_ints.remove(i);
+
+        if test_validity(&changed_ints) {
+            return true;
+        }
+    }
+
+    false
 }
 
 #[cfg(test)]
