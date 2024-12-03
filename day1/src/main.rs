@@ -1,4 +1,4 @@
-// curl --cookie "session=$COOKIE" https://adventofcode.com/2024/day/$DAY/input -O
+// curl --cookie "session=$COOKIE" https://adventofcode.com/2024/day/$DAY/input -o input.txt
 
 use std::fs::read_to_string;
 
