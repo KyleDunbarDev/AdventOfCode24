@@ -21,7 +21,7 @@ fn main() {
 
 pub fn find_valid_sequence(chars: &str) -> Vec<(i32, i32)> {
     println!("{}", chars);
-    let re = Regex::new(r"mul\\((\\d+),(\\d+)\\)").unwrap();
+    let re = Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)").unwrap();
     let mut results: Vec<(i32, i32)> = vec![];
     for (_, [first, second]) in re.captures_iter(chars).map(|c| c.extract()) {
         results.push((
