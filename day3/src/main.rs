@@ -1,5 +1,6 @@
 use regex::Regex;
-use std::{fs::read_to_string, ops::Index};
+use std::fs::read_to_string;
+
 fn main() {
     let total_result: i32 = read_to_string("./src/input.txt")
         .unwrap()
@@ -7,7 +8,7 @@ fn main() {
         .filter(|line| !line.trim().is_empty()) //every line thats not blank
         .map(|line| {
             // let line_results = find_valid_sequence(&line) //part 1
-            let line_results = part_2(&line)
+            let line_results = part_2(&line) //part 2
                 .into_iter()
                 .map(|int_tuple: (i32, i32)| int_tuple.0 * int_tuple.1)
                 .collect::<Vec<i32>>()
@@ -58,6 +59,7 @@ pub fn part_2(chars: &str) -> Vec<(i32, i32)> {
     // println!("{:?}", mul_indices);
     // println!("{:?}", do_indices);
     // println!("{:?}", dont_indices);
+    let mut should_add: bool = false;
 
     for i in mul_indices {
         //nearest but not larger
@@ -73,20 +75,26 @@ pub fn part_2(chars: &str) -> Vec<(i32, i32)> {
                 nearest_dont = h.0 as i32;
             }
         }
-        let mut added: bool = false;
         if nearest_do > nearest_dont {
-            added = true;
+            should_add = true;
             for (_, [first, second]) in re.captures_iter(i.1).map(|c| c.extract()) {
                 valid_results.push((
                     first.parse::<i32>().unwrap(),
                     second.parse::<i32>().unwrap(),
                 ));
             }
+        } else {
+            should_add = false
         }
-        println!("{:?}, {:?}, {:?}, {:?}", i, nearest_do, nearest_dont, added);
+        println!(
+            "{:?}, {:?}, {:?}, {:?}",
+            i, nearest_do, nearest_dont, should_add
+        );
     }
 
     valid_results
+
+    //Err / TODO: don'ts dont carry over from previous line
 }
 
 #[cfg(test)]
