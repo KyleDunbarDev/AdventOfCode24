@@ -7,8 +7,8 @@ fn main() {
         .lines()
         .filter(|line| !line.trim().is_empty()) //every line thats not blank
         .map(|line| {
-            // let line_results = find_valid_sequence(&line) //part 1
-            let line_results = part_2(&line) //part 2
+            let line_results = find_valid_sequence(&line) //part 1
+                // let line_results = part_2(&line) //part 2
                 .into_iter()
                 .map(|int_tuple: (i32, i32)| int_tuple.0 * int_tuple.1)
                 .collect::<Vec<i32>>()
@@ -19,6 +19,28 @@ fn main() {
         .sum::<i32>();
 
     println!("{}", total_result);
+
+    //part 2
+    let mut joined_lines: String = "".to_owned();
+
+    for i in read_to_string("./src/input.txt")
+        .unwrap()
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+    {
+        //every line thats not blank
+        joined_lines.push_str(i);
+    }
+
+    // println!("{}", joined_lines);
+
+    let total_result_part_2: i32 = part_2(joined_lines.as_str())
+        .into_iter()
+        .map(|int_tuple: (i32, i32)| int_tuple.0 * int_tuple.1)
+        .collect::<Vec<i32>>()
+        .iter()
+        .sum::<i32>();
+    println!("{}", total_result_part_2);
 }
 
 pub fn find_valid_sequence(chars: &str) -> Vec<(i32, i32)> {
@@ -86,10 +108,10 @@ pub fn part_2(chars: &str) -> Vec<(i32, i32)> {
         } else {
             should_add = false
         }
-        println!(
-            "{:?}, {:?}, {:?}, {:?}",
-            i, nearest_do, nearest_dont, should_add
-        );
+        // println!(
+        //     "{:?}, {:?}, {:?}, {:?}",
+        //     i, nearest_do, nearest_dont, should_add
+        // );
     }
 
     valid_results
